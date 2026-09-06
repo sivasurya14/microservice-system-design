@@ -2,6 +2,7 @@ package com.user.controller;
 
 import com.user.entity.User;
 import com.user.service.UserService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,6 +15,9 @@ public class UserController {
         this.userService = userService;
     }
 
+    @Value("${server.port}")
+    private String serverPort;
+
     @PostMapping
     public User createUser(@RequestBody User user) {
 
@@ -25,4 +29,10 @@ public class UserController {
 
         return userService.getUser(id);
     }
+
+    @GetMapping("/instance")
+    public String getInstance() {
+        return "Response from User Service instance running on port: " + serverPort;
+    }
+
 }
